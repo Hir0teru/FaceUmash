@@ -1,9 +1,10 @@
 export type Character = {
-  id: number
+  id: string
   name: string
-  rate: number
+  url: string
 }
 
-type Win = 1
-type Lose = 0
-export type Points = Win | Lose
+export type Pool = {
+  characters: Character[]
+  rest: Character[]
+}
