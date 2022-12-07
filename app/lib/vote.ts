@@ -30,3 +30,13 @@ export const generateNumbers = (len: number): number[] => {
   }
   return numbers
 }
+
+// 配列をシャッフルする
+export const shuffle = ([...array]: number[]): number[] => {
+  let i: number = array.length
+  while (--i > 0) {
+    const randomIndex: number = Math.floor(Math.random() * (i + 1))
+    ;[array[randomIndex], array[i]] = [array[i], array[randomIndex]]
+  }
+  return array
+}
