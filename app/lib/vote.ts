@@ -15,20 +15,25 @@ export const generatePool = (characters: Character[], selectedCharacter?: Charac
 }
 
 // 被りなしの整数の乱数の配列を返す
-const generateRandomNumbers = (max: number, quantity: number): number[] => {
-  const numbers: number[] = generateNumbers(max)
-  while (numbers.length >= quantity) {
-    numbers.splice(Math.floor(Math.random() * numbers.length), 1)
-  }
-  // ランダムな順番でソートして返す
-  return numbers.sort(() => Math.random() - 0.5)
+export const generateRandomNumbers = (max: number, len: number): number[] => {
+  return shuffle(generateNumbers(max)).slice(0, len)
 }
 
 // 0始まりの整数の配列を返す
-const generateNumbers = (len: number): number[] => {
+export const generateNumbers = (len: number): number[] => {
   const numbers: number[] = []
   for (let i: number = 0; i < len; i++) {
     numbers.push(i)
   }
   return numbers
+}
+
+// 配列をシャッフルする
+export const shuffle = ([...array]: number[]): number[] => {
+  let i: number = array.length
+  while (--i > 0) {
+    const randomIndex: number = Math.floor(Math.random() * (i + 1))
+    ;[array[randomIndex], array[i]] = [array[i], array[randomIndex]]
+  }
+  return array
 }
