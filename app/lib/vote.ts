@@ -13,13 +13,8 @@ export const generatePool = (characters: Character[]): Pool => {
 }
 
 // 被りなしの整数の乱数の配列を返す
-const generateRandomNumbers = (max: number, quantity: number): number[] => {
-  const numbers: number[] = generateNumbers(max)
-  while (numbers.length >= quantity) {
-    numbers.splice(Math.floor(Math.random() * numbers.length), 1)
-  }
-  // ランダムな順番でソートして返す
-  return numbers.sort(() => Math.random() - 0.5)
+export const generateRandomNumbers = (max: number, len: number): number[] => {
+  return shuffle(generateNumbers(max)).slice(0, len)
 }
 
 // 0始まりの整数の配列を返す
