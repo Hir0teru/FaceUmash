@@ -23,7 +23,7 @@ const generateRandomNumbers = (max: number, quantity: number): number[] => {
 }
 
 // 0始まりの整数の配列を返す
-const generateNumbers = (len: number): number[] => {
+export const generateNumbers = (len: number): number[] => {
   const numbers: number[] = []
   for (let i: number = 0; i < len; i++) {
     numbers.push(i)
