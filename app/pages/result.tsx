@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import type { NextPage } from 'next'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import {
   Card,
@@ -8,7 +9,6 @@ import {
   CardContent,
   Typography,
   Grid,
-  Link,
   Box,
   Button,
   IconButton,
@@ -17,8 +17,9 @@ import TwitterIcon from '@mui/icons-material/Twitter'
 
 const Result: NextPage = () => {
   const router = useRouter()
-  const { id, name, url } = router.query
-  const image = name ? `/${name}.png` : ''
+  const id = router.query.id as string
+  const name = router.query.name as string
+  const url = router.query.url as string
   return (
     <>
       <Box>
@@ -26,10 +27,10 @@ const Result: NextPage = () => {
         <Card>
           <CardMedia>
             <Image
-              src={image}
+              src={`/${name}.png`}
               height={140}
               width={140}
-              alt={typeof name === 'string' ? name : ''}
+              alt={name ? name : ''}
               priority={true}
               loading='eager'
             />
@@ -41,22 +42,38 @@ const Result: NextPage = () => {
             <IconButton aria-label='share'>
               <TwitterIcon />
             </IconButton>
-            <Button variant='text' target='_blank' href={typeof url === 'string' ? url : ''}>
+            <Button variant='text' target='_blank' href={url ? url : ''} rel='noopener noreferrer'>
               {name ? `${name}について` : ''}
             </Button>
           </CardActions>
         </Card>
       </Box>
       <Box textAlign='center'>
-        <Button variant='outlined' size='large' onClick={() => router.back()}>
-          最初から遊ぶ
-        </Button>
+        <Link href='/vote'>
+          <Button variant='outlined' size='large'>
+            最初から遊ぶ
+          </Button>
+        </Link>
       </Box>
       <Box textAlign='center'>
-        {/* TODO:ボタン押下時の処理を追加 */}
-        <Button variant='outlined' size='large' onClick={() => null}>
-          続けて遊ぶ
-        </Button>
+        <Link
+          href={{
+            pathname: '/vote',
+            query: { selectedCharacter: id },
+          }}
+          as={'/vote'}
+        >
+          <Button variant='outlined' size='large'>
+            続けて遊ぶ
+          </Button>
+        </Link>
+      </Box>
+      <Box textAlign='center'>
+        <Link href='/'>
+          <Button variant='outlined' size='large'>
+            トップへ
+          </Button>
+        </Link>
       </Box>
     </>
   )
