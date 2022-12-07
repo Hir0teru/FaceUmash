@@ -14,7 +14,7 @@ const CardButton = ({
     <CardActionArea onClick={() => onClick(id)}>
       <Card>
         <CardMedia>
-          <Image src={image} height={140} width={140} priority={true} loading='eager' />
+          <Image src={image} height={140} width={140} priority={true} alt={name} loading='eager' />
         </CardMedia>
         <CardContent>
           <Typography>{name}</Typography>
