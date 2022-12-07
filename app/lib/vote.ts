@@ -1,11 +1,13 @@
 import type { Character, Pool } from '../interfaces'
 
-export const generatePool = (characters: Character[]): Pool => {
-  // TODO:環境変数化する
-  const poolLength = 15
-  const selectedCharacters: Character[] = generateRandomNumbers(characters.length, poolLength).map(
-    (randomNumber) => characters[randomNumber],
-  )
+export const generatePool = (characters: Character[], selectedCharacter?: Character): Pool => {
+  const poolLength: number = Number(process.env.NEXT_PUBLIC_POOL)
+  const selectedCharacters: Character[] = generateRandomNumbers(characters.length, poolLength)
+    .map((randomNumber) => characters[randomNumber])
+    .filter((characters) => characters !== selectedCharacter)
+
+  if (selectedCharacter) selectedCharacters.splice(0, 0, selectedCharacter)
+
   return {
     characters: selectedCharacters.splice(0, 2),
     rest: selectedCharacters,
