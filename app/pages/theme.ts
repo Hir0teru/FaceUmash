@@ -1,16 +1,18 @@
 import { createTheme } from '@mui/material/styles'
 
 const theme = createTheme({
-  // TODO:テーマを設定する
   palette: {
     primary: {
-      main: '#009688',
-      contrastText: '#795548',
+      main: '#1687A7',
+      contrastText: '#D3E0EA',
+    },
+    secondary: {
+      main: '#4caf50',
     },
     background: {
-      default: '#bdbdbd',
+      default: '#F6F5F5',
     },
-    text: { primary: '#ff9800' },
+    text: { primary: '#276678' },
   },
 })
 
