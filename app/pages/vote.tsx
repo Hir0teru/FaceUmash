@@ -1,9 +1,8 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { Grid } from '@mui/material'
+import { Grid, Box } from '@mui/material'
 import { useState } from 'react'
 import useSWR from 'swr'
-import { ClassNames } from '@emotion/react'
 import type { Character, Pool } from '../interfaces'
 import CardButton from '../components/cardButton'
 import { generatePool } from '../lib/vote'
@@ -19,7 +18,12 @@ const Vote: NextPage = () => {
   const { selectedCharacter } = router.query
   return (
     <>
-      <Grid container spacing={4} wrap={'nowrap'}>
+      <Grid container sx={{ height: 'auto', width: 'auto' }}>
+        <Grid item xs={12} sx={{ mt: { xs: '15%', md: '7.5%' } }}>
+          <Box sx={{ typography: { xs: 'h4', md: 'h2' } }} textAlign='center'>
+            どっちが気になる？
+          </Box>
+        </Grid>
         <Buttons
           baseCharacters={baseCharacters}
           seletctedCharacter={
@@ -52,7 +56,7 @@ const Buttons = ({
           pathname: '/result',
           query: characters[0].id === winner ? characters[0] : characters[1],
         },
-        '/result',
+        undefined,
         { shallow: true },
       )
       return
@@ -70,7 +74,7 @@ const Buttons = ({
   return (
     <>
       {characters.map((character) => (
-        <Grid item key={character.id}>
+        <Grid item xs={6} key={character.id} sx={{ margin: 'auto', mt: { xs: '5%', md: '2.5%' } }}>
           <CardButton {...character} onClick={handleCradButtonClicked}></CardButton>
         </Grid>
       ))}
