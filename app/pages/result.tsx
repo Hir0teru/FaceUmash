@@ -13,6 +13,7 @@ import {
   Box,
 } from '@mui/material'
 import TwitterIcon from '@mui/icons-material/Twitter'
+import { generateTweetURL } from '../lib/twitterUtil'
 
 const Result: NextPage = () => {
   const router = useRouter()
@@ -45,9 +46,19 @@ const Result: NextPage = () => {
               </Box>
             </CardContent>
             <CardActions>
-              <IconButton aria-label='share'>
-                <TwitterIcon />
-              </IconButton>
+              <Link
+                href={generateTweetURL(
+                  name && `あなたへのおすすめのウマ娘は${name}です`,
+                  `${router.asPath}`,
+                )} // TODO:ドメインは環境変数化する
+                target='_blank'
+                rel='noopener noreferrer'
+                passHref
+              >
+                <IconButton aria-label='share'>
+                  <TwitterIcon sx={{ color: '#1DA1F2' }} />
+                </IconButton>
+              </Link>
               <Box sx={{ ml: 'auto' }}>
                 <Button
                   variant='text'
