@@ -1,5 +1,5 @@
-import React from 'react'
 import { AppBar, Toolbar, Typography, Box } from '@mui/material'
+import React from 'react'
 
 const Header = (): JSX.Element => {
   return (

@@ -1,6 +1,6 @@
-import { generatePool, generateNumbers, generateRandomNumbers, shuffle } from '../vote'
 import { characters } from '../../__mocks__/db'
 import type { Character, Pool } from '../../interfaces'
+import { generatePool, generateNumbers, generateRandomNumbers, shuffle } from '../vote'
 process.env.NEXT_PUBLIC_POOL = '15'
 
 describe('Test for vote.ts', () => {

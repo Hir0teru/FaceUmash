@@ -1,7 +1,7 @@
-import React from 'react'
-import { Grid, Button, Typography } from '@mui/material'
 import TwitterIcon from '@mui/icons-material/Twitter'
+import { Grid, Button, Typography } from '@mui/material'
 import Link from 'next/link'
+import React from 'react'
 import { generateTweetURL } from '../lib/twitterUtil'
 
 const Footer = (): JSX.Element => {

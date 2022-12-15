@@ -5,8 +5,7 @@
     "prettier", // prettierとeslintとの衝突回避
     "plugin:import/recommended",
     "plugin:import/typescript",
-    "plugin:import/warnings",
-    "plugin:tailwindcss/recommended"
+    "plugin:import/warnings"
   ],
   "rules": {
     "import/order": [
