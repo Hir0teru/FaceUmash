@@ -1,7 +1,7 @@
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import { Button, Grid, Box, Card, List, ListItem, ListItemIcon, ListItemText } from '@mui/material'
 import type { NextPage } from 'next'
 import Link from 'next/link'
-import { Button, Grid, Box, Card, List, ListItem, ListItemIcon, ListItemText } from '@mui/material'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
 const Home: NextPage = () => {
   const itemTexts: string[] = [

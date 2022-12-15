@@ -1,10 +1,10 @@
+import { Grid, Box } from '@mui/material'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { Grid, Box } from '@mui/material'
 import { useState } from 'react'
 import useSWR from 'swr'
-import type { Character, Pool } from '../interfaces'
 import CardButton from '../components/cardButton'
+import type { Character, Pool } from '../interfaces'
 import { generatePool } from '../lib/vote'
 
 const Vote: NextPage = () => {

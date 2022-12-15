@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
+const admin = require('firebase-admin')
 const { cert } = require('firebase-admin/app')
 const { getFirestore } = require('firebase-admin/firestore')
 const serviceAccount = require('../../firebase.json')
-const admin = require('firebase-admin')
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {

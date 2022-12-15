@@ -1,7 +1,4 @@
-import Image from 'next/image'
-import type { NextPage } from 'next'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
+import TwitterIcon from '@mui/icons-material/Twitter'
 import {
   Card,
   CardMedia,
@@ -12,7 +9,10 @@ import {
   IconButton,
   Box,
 } from '@mui/material'
-import TwitterIcon from '@mui/icons-material/Twitter'
+import type { NextPage } from 'next'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { generateTweetURL } from '../lib/twitterUtil'
 
 const Result: NextPage = () => {

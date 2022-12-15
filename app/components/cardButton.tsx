@@ -1,5 +1,5 @@
-import Image from 'next/image'
 import { CardActionArea, Card, CardMedia, CardContent, Box } from '@mui/material'
+import Image from 'next/image'
 import { Character } from '../interfaces'
 
 const CardButton = ({

@@ -1,7 +1,7 @@
-import React from 'react'
 import { Grid, Box, Container } from '@mui/material'
-import Header from './header'
+import React from 'react'
 import Footer from './footer'
+import Header from './header'
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
