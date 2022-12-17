@@ -5,7 +5,7 @@ import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import Layout from '../components/layout'
 import createEmotionCache from '../lib/createEmotionCache'
-import theme from './theme'
+import theme from '../theme/theme'
 
 const clientSideEmotionCache = createEmotionCache()
 interface MyAppProps extends AppProps {
