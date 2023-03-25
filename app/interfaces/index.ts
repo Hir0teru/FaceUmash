@@ -8,3 +8,5 @@ export type Pool = {
   characters: Character[]
   rest: Character[]
 }
+
+export type WinPoint = 0 | 1
