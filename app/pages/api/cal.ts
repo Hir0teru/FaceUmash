@@ -1,4 +1,11 @@
-import { WinPoint } from '../../interfaces'
+import { Ratings, WinPoint } from '../../interfaces'
+
+export const getRatings = (winnerRating: number, loserRating: number): Ratings => {
+  return {
+    winnerRating: calElorating(winnerRating, loserRating, true),
+    loserRating: calElorating(loserRating, winnerRating, false),
+  }
+}
 
 // イロレーティングを算出する
 export const calElorating = (

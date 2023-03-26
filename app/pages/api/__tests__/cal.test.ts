@@ -1,4 +1,4 @@
-import { calElorating, calWinProbability } from '../cal'
+import { getRatings, calElorating, calWinProbability } from '../cal'
 
 describe('Test for api/cal.ts', () => {
   test('calWinProbability test with rate difference 50 won', () => {
@@ -27,5 +27,9 @@ describe('Test for api/cal.ts', () => {
 
   test('calElorating test with same rate lose', () => {
     expect(calElorating(2000, 2000, false)).toEqual(1992)
+  })
+
+  test('getRatings test', () => {
+    expect(getRatings(2000, 2000)).toEqual({ winnerRating: 2008, loserRating: 1992 })
   })
 })
