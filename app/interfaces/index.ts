@@ -9,4 +9,9 @@ export type Pool = {
   rest: Character[]
 }
 
+export type Ratings = {
+  winnerRating: number
+  loserRating: number
+}
+
 export type WinPoint = 0 | 1
