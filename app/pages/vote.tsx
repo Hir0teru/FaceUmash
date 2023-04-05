@@ -27,7 +27,6 @@ const Vote: NextPage = () => {
   // TODO:Implement error handling and resource loading processes
   if (error) return <div></div>
   if (!baseCharacters) return <div>Loading...</div>
-  console.log({ baseCharacters })
   return (
     <>
       <Grid container sx={{ height: 'auto', width: 'auto' }}>
