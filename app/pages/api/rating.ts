@@ -92,7 +92,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
  * @param {string} id - The character ID.
  * @returns {DocumentReference} - The reference to the shard.
  */
-const getShardRefById =
+export const getShardRefById =
   (db: Firestore) =>
   (ratings: string) =>
   (shards: string) =>
@@ -112,7 +112,7 @@ const getShardRefById =
  * @param {Firestore} db - The Firestore instance.
  * @returns {Promise<number>} - The aggregated count.
  */
-const aggregateShards = async (
+export const aggregateShards = async (
   transaction: Transaction,
   id: string,
   db: Firestore,
@@ -134,7 +134,7 @@ const aggregateShards = async (
  * @param {number} count - The new count to set.
  * @returns {Promise<void>} - A Promise that resolves when the update is complete.
  */
-const updateRating = async (
+export const updateRating = async (
   transaction: Transaction,
   docRef: DocumentReference,
   count: number,
@@ -151,6 +151,6 @@ const updateRating = async (
  * @param {number} oldRating - The old rating.
  * @returns {number} - The calculated new count.
  */
-const calNewCount = (count: number, newRating: number, oldRating: number): number => {
+export const calNewCount = (count: number, newRating: number, oldRating: number): number => {
   return count + newRating - oldRating
 }
