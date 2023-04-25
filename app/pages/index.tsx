@@ -11,12 +11,12 @@ const Home: NextPage = () => {
   return (
     <>
       <Grid container sx={{ height: 'auto', margin: 'auto' }}>
-        <Grid item xs={12} sx={{ mt: { xs: '15%', md: '7.5%' } }}>
+        <Grid item xs={12}>
           <Box sx={{ typography: { xs: 'h4', md: 'h2' } }} textAlign='center'>
             どっちが気になる？
           </Box>
         </Grid>
-        <Grid item xs={8} sx={{ margin: 'auto', mt: { xs: '5%', md: '2.5%' } }}>
+        <Grid item xs={10} sm={8} sx={{ margin: 'auto', mt: { xs: '5%', md: '2.5%' } }}>
           <Card>
             <Box sx={{ typography: 'h5' }}>あそびかた</Box>
             <List>
@@ -37,7 +37,13 @@ const Home: NextPage = () => {
             </List>
           </Card>
         </Grid>
-        <Grid item xs={8} sx={{ margin: 'auto', mt: { xs: '5%', md: '2.5%' } }} textAlign='center'>
+        <Grid
+          item
+          xs={10}
+          sm={8}
+          sx={{ margin: 'auto', mt: { xs: '5%', md: '2.5%' } }}
+          textAlign='center'
+        >
           <Link href='/vote' style={{ textDecoration: 'none' }}>
             <Button variant='contained' sx={{ width: '100%', height: '7.5vh', fontSize: 20 }}>
               あそんでみる
