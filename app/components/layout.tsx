@@ -11,8 +11,19 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <Grid item xs={12} sx={{ height: '10%' }}>
             <Header />
           </Grid>
-          <Grid item xs={12} sx={{ height: '80%' }}>
-            <Container>{children}</Container>
+          <Grid item xs={12} sx={{ height: '80%', position: 'relative' }}>
+            <Container
+              sx={{
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Grid container alignItems='center' justifyContent='center'>
+                {children}
+              </Grid>
+            </Container>
           </Grid>
           <Grid item xs={12} sx={{ height: '10%' }}>
             <Footer />
