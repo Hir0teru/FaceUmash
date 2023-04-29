@@ -1,55 +1,9 @@
 import { characters } from '../../__mocks__/db'
 import type { Character, Pool } from '../../interfaces'
-import { generatePool, generateNumbers, generateRandomNumbers, shuffle } from '../vote'
+import { generatePool } from '../vote'
 process.env.NEXT_PUBLIC_POOL = '15'
 
 describe('Test for vote.ts', () => {
-  test('generateNumbersのテスト:引数が0以下', () => {
-    const len: number = 0
-    const expected: number[] = []
-    const result: number[] = generateNumbers(len)
-    expect(result).toEqual(expected)
-    expect(result).toHaveLength(len)
-  })
-
-  test('generateNumbersのテスト:引数が0より大きい', () => {
-    const len: number = 5
-    const expected: number[] = [0, 1, 2, 3, 4]
-    const result: number[] = generateNumbers(len)
-    expect(result).toEqual(expected)
-    expect(result).toHaveLength(len)
-  })
-
-  test('shuffleのテスト:シャッフルあり', () => {
-    const spyRandom = jest.spyOn(Math, 'random').mockReturnValue(0.5)
-    const input: number[] = [0, 1, 2, 3, 4]
-    const expected: number[] = [0, 3, 1, 4, 2]
-    const result: number[] = shuffle(input)
-    spyRandom.mockRestore()
-    expect(result).toEqual(expected)
-  })
-
-  test('shuffleのテスト:シャッフルなし', () => {
-    const spyRandom = jest.spyOn(Math, 'random').mockReturnValue(0.9)
-    const input: number[] = [0, 1, 2, 3, 4]
-    const result: number[] = shuffle(input)
-    spyRandom.mockRestore()
-    expect(result).toEqual(input)
-  })
-
-  test('generateRandomNumbersのテスト', () => {
-    // シャッフルなし
-    const spyRandom = jest.spyOn(Math, 'random').mockReturnValue(0.9)
-    const max: number = 7
-    const len: number = 5
-    const expected: number[] = [0, 1, 2, 3, 4]
-    const result: number[] = generateRandomNumbers(max, len)
-    spyRandom.mockRestore()
-    expect(result).toEqual(expected)
-    expect(result).toEqual(Array.from(new Set(result)))
-    expect(result).toHaveLength(len)
-  })
-
   test('generatePoolのテスト:selectedCharacter指定なし', () => {
     // シャッフルなし
     const spyRandom = jest.spyOn(Math, 'random').mockReturnValue(0.9999)

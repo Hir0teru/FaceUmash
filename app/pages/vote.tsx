@@ -3,37 +3,39 @@ import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import useSWR from 'swr'
+import { useSWRConfig } from 'swr'
 import CardButton from '../components/cardButton'
 import type { Character, Pool } from '../interfaces'
 import { generatePool } from '../lib/vote'
 
 const Vote: NextPage = () => {
-  const { data: baseCharacters, error } = useSWR('/api/db', (url: string) =>
-    fetch(url).then((res) => res.json()),
-  )
   const router = useRouter()
-  // TODO:エラーハンドル時とリソース読み込み時の処理を実装する
-  if (error) return <div></div>
-  if (!baseCharacters) return <div></div>
   const { selectedCharacter } = router.query
+  const uri: string = selectedCharacter
+    ? `/api/db?selected=${selectedCharacter}`
+    : '/api/db?selected'
+
+  const { data: baseCharacters, error } = useSWR(
+    uri,
+    (url: string) => fetch(url).then((res) => res.json()),
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    },
+  )
+
+  // TODO:Implement error handling and resource loading processes
+  if (error) return <div></div>
+  if (!baseCharacters) return <div>Loading...</div>
   return (
     <>
-      <Grid container sx={{ height: 'auto', width: 'auto' }}>
-        <Grid item xs={12} sx={{ mt: { xs: '15%', md: '7.5%' } }}>
+      <Grid container>
+        <Grid item xs={12}>
           <Box sx={{ typography: { xs: 'h4', md: 'h2' } }} textAlign='center'>
             どっちが気になる？
           </Box>
         </Grid>
-        <Buttons
-          baseCharacters={baseCharacters}
-          seletctedCharacter={
-            selectedCharacter
-              ? baseCharacters.find(
-                  (baseCharacter: Character) => baseCharacter.id === selectedCharacter,
-                )
-              : undefined
-          }
-        ></Buttons>
+        <Buttons baseCharacters={baseCharacters} seletctedCharacter={undefined} uri={uri}></Buttons>
       </Grid>
     </>
   )
@@ -42,23 +44,30 @@ const Vote: NextPage = () => {
 const Buttons = ({
   baseCharacters,
   seletctedCharacter,
+  uri,
 }: {
   baseCharacters: Character[]
   seletctedCharacter?: Character
+  uri: string
 }) => {
   const [pool, setPool] = useState<Pool>(generatePool(baseCharacters, seletctedCharacter))
   const router = useRouter()
-  const handleCradButtonClicked = (winner: string): void => {
+  const { mutate } = useSWRConfig()
+  const handleCradButtonClicked = async (winner: string, loser: string): Promise<void> => {
+    await fetch(`api/rating?winnerid=${winner}&loserid=${loser}`)
     const { characters, rest }: Pool = pool
     if (!rest.length) {
+      const copy = [...characters]
       router.push(
         {
           pathname: '/result',
-          query: characters[0].id === winner ? characters[0] : characters[1],
+          query: copy[0]?.id === winner ? copy[0] : copy[1],
         },
         undefined,
         { shallow: true },
       )
+      // Clear the cache and move to retrieve character data randomly
+      mutate(uri, undefined, { revalidate: false })
       return
     }
     setPool({
@@ -73,11 +82,30 @@ const Buttons = ({
   const { characters } = pool
   return (
     <>
-      {characters.map((character) => (
-        <Grid item xs={6} key={character.id} sx={{ margin: 'auto', mt: { xs: '5%', md: '2.5%' } }}>
-          <CardButton {...character} onClick={handleCradButtonClicked}></CardButton>
-        </Grid>
-      ))}
+      <Grid
+        item
+        xs={6}
+        key={characters[0]?.id}
+        sx={{ margin: 'auto', mt: { xs: '5%', md: '2.5%' } }}
+      >
+        <CardButton
+          myCharacter={characters[0]}
+          opponentCharacter={characters[1]}
+          onClick={handleCradButtonClicked}
+        />
+      </Grid>
+      <Grid
+        item
+        xs={6}
+        key={characters[1]?.id}
+        sx={{ margin: 'auto', mt: { xs: '5%', md: '2.5%' } }}
+      >
+        <CardButton
+          myCharacter={characters[1]}
+          opponentCharacter={characters[0]}
+          onClick={handleCradButtonClicked}
+        />
+      </Grid>
     </>
   )
 }
