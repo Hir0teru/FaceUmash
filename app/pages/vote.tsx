@@ -18,8 +18,8 @@ const Vote: NextPage = () => {
   const { selectedCharacter } = router.query
   return (
     <>
-      <Grid container sx={{ height: 'auto', width: 'auto' }}>
-        <Grid item xs={12} sx={{ mt: { xs: '15%', md: '7.5%' } }}>
+      <Grid container>
+        <Grid item xs={12}>
           <Box sx={{ typography: { xs: 'h4', md: 'h2' } }} textAlign='center'>
             どっちが気になる？
           </Box>
