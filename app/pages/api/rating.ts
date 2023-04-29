@@ -26,19 +26,37 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     })
   }
   const db: Firestore = admin.firestore()
-  const NUM_SHARDS: number = 5
 
-  const winnerId: string = req.query.winnerId as string
-  const loserId: string = req.query.loserId as string
+  const winnerid: string = (req.query?.winnerid as string) || ''
+  const loserid: string = (req.query?.loserid as string) || ''
 
-  if (!winnerId || !loserId) {
-    res.status(400).json({ message: 'winnerId and loserId are required' })
+  if (!winnerid || !loserid) {
+    res.status(400).json({ message: 'winnerid and loserid are required' })
     return
   }
 
-  const getShardRefByIdWithNumShards = getShardRefById(db)('ratings')('shards')(NUM_SHARDS)
-  const winnerRef: DocumentReference = getShardRefByIdWithNumShards(winnerId)
-  const loserRef: DocumentReference = getShardRefByIdWithNumShards(loserId)
+  // TODO:Refactor validation process to make it reusable
+  if (!winnerid.match(/^00([0-7][0-9]|8[0-8])$/) || !loserid.match(/^00([0-7][0-9]|8[0-8])$/)) {
+    res.status(400).json({ message: 'invalid parameters' })
+    return
+  }
+
+  // To reduce the number of document reads in Firestore, avoid calculating rates with a certain probability.
+  if (
+    getRandomIntInclusive(
+      process.env.MAX_RANDOM_NUMBER?.match(/^[1-9]\d*$|^0$/)
+        ? Number(process.env.MAX_RANDOM_NUMBER)
+        : 5,
+    ) !== 1
+  ) {
+    res.status(200).json({ message: 'sucess' })
+    return
+  }
+  const getShardRefByIdWithNumShards = getShardRefById(db)('ratings')('shards')(
+    process.env.NUM_SHARDS?.match(/^[1-9]\d*$|^0$/) ? Number(process.env.NUM_SHARDS) : 5,
+  )
+  const winnerRef: DocumentReference = getShardRefByIdWithNumShards(winnerid)
+  const loserRef: DocumentReference = getShardRefByIdWithNumShards(loserid)
 
   try {
     await db.runTransaction(async (transaction: Transaction) => {
@@ -49,8 +67,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         throw new Error('Document does not exist')
       }
 
-      const oldWinnerRating: number = await aggregateShards(transaction, winnerId, db)
-      const oldLoserRating: number = await aggregateShards(transaction, loserId, db)
+      const oldWinnerRating: number = await aggregateShards(transaction, winnerid, db)
+      const oldLoserRating: number = await aggregateShards(transaction, loserid, db)
 
       const { winnerRating: newWinnerRating, loserRating: newLoserRating } = getRatings(
         oldWinnerRating,
@@ -75,7 +93,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         calNewCount(oldLoserCount, newLoserRating, oldLoserRating),
       )
 
-      // TODO:improve request body
+      // TODO:improve response body
       res.status(200).json({ message: 'sucess' })
     })
   } catch (error: any) {
@@ -154,3 +172,10 @@ export const updateRating = async (
 export const calNewCount = (count: number, newRating: number, oldRating: number): number => {
   return count + newRating - oldRating
 }
+
+/**
+ * Returns a random integer between 1 and the specified maximum value (inclusive).
+ * @param {number} max - The maximum value (inclusive).
+ * @returns {number} A random integer between 1 and the maximum value (inclusive).
+ */
+export const getRandomIntInclusive = (max: number): number => Math.floor(Math.random() * max) + 1
