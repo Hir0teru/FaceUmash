@@ -51,10 +51,12 @@ const Buttons = ({
   uri: string
 }) => {
   const [pool, setPool] = useState<Pool>(generatePool(baseCharacters, seletctedCharacter))
+  const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   const { mutate } = useSWRConfig()
   const handleCradButtonClicked = async (winner: string, loser: string): Promise<void> => {
-    await fetch(`api/rating?winnerid=${winner}&loserid=${loser}`)
+    setIsLoading(true)
+    fetch(`api/rating?winnerid=${winner}&loserid=${loser}`)
     const { characters, rest }: Pool = pool
     if (!rest.length) {
       const copy = [...characters]
@@ -77,6 +79,7 @@ const Buttons = ({
       }),
       rest,
     })
+    setIsLoading(false)
   }
 
   const { characters } = pool
@@ -92,6 +95,7 @@ const Buttons = ({
           myCharacter={characters[0]}
           opponentCharacter={characters[1]}
           onClick={handleCradButtonClicked}
+          disabled={isLoading}
         />
       </Grid>
       <Grid
@@ -104,6 +108,7 @@ const Buttons = ({
           myCharacter={characters[1]}
           opponentCharacter={characters[0]}
           onClick={handleCradButtonClicked}
+          disabled={isLoading}
         />
       </Grid>
     </>
