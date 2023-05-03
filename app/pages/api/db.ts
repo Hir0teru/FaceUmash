@@ -62,7 +62,7 @@ export const generateUniqueRandomNumbers = (
   if (selectedId !== -1) numbers.add(selectedId)
 
   while (numbers.size < len) {
-    const randomNumber = Math.floor(Math.random() * (max + 1))
+    const randomNumber = Math.floor(Math.random() * max)
     numbers.add(randomNumber)
   }
 
