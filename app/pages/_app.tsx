@@ -17,8 +17,12 @@ function MyApp(props: MyAppProps) {
   return (
     <CacheProvider value={emotionCache}>
       <Head>
+        <title>FaceUmash みんなでつくるウマ娘ランキング</title>
         <meta name='viewport' content='initial-scale=1, width=device-width' />
-        <title>FaceUmash</title>
+        <meta
+          name='description'
+          content='「faceUmash」は、ゲームを通してお気に入りのウマ娘を見つけることができるファンサイトです。ゲームの結果はウマ娘の人気ランキングとして反映されます。ゲームを楽しみながら、皆でウマ娘の人気ランキングを作成しましょう！'
+        />
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />

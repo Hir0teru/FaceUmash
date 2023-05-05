@@ -3,6 +3,7 @@ import type { NextPage } from 'next'
 import useSWR from 'swr'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import Image from 'next/image'
+import Loading from '../components/loading'
 
 const Ranking: NextPage = () => {
   const { data } = useSWR('/api/ranking', (url: string) => fetch(url).then((res) => res.json()))
@@ -36,7 +37,7 @@ const Ranking: NextPage = () => {
       disableColumnMenu: true,
     },
   ]
-  if (!data) return <div></div>
+  if (!data) return <Loading />
 
   const {
     createdAt,

@@ -45,8 +45,16 @@ const Home: NextPage = () => {
           textAlign='center'
         >
           <Link href='/vote' style={{ textDecoration: 'none' }}>
-            <Button variant='contained' sx={{ width: '100%', height: '7.5vh', fontSize: 20 }}>
+            <Button variant='contained' sx={{ width: '100%', height: '6.25vh', fontSize: 20 }}>
               あそんでみる
+            </Button>
+          </Link>
+          <Link href='/ranking' style={{ textDecoration: 'none' }}>
+            <Button
+              variant='contained'
+              sx={{ width: '100%', height: '6.25vh', fontSize: 20, mt: '2.5%' }}
+            >
+              ランキング
             </Button>
           </Link>
         </Grid>
