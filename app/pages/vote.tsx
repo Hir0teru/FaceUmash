@@ -5,6 +5,7 @@ import { useState } from 'react'
 import useSWR from 'swr'
 import { useSWRConfig } from 'swr'
 import CardButton from '../components/cardButton'
+import Loading from '../components/loading'
 import type { Character, Pool } from '../interfaces'
 import { generatePool } from '../lib/vote'
 
@@ -26,7 +27,7 @@ const Vote: NextPage = () => {
 
   // TODO:Implement error handling and resource loading processes
   if (error) return <div></div>
-  if (!baseCharacters) return <div>Loading...</div>
+  if (!baseCharacters) return <Loading />
   return (
     <>
       <Grid container>
