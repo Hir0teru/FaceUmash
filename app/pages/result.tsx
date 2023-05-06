@@ -32,10 +32,18 @@ const Result: NextPage = () => {
             mb: { xs: '0.5%', sm: '0.875%', md: '1.25%' },
           }}
         >
-          <Box sx={{ typography: { xs: 'h6', sm: 'h4', md: 'h4' } }} textAlign='center'>
+          <Box
+            sx={{ typography: { xs: 'h6', sm: 'h4', md: 'h4' } }}
+            textAlign='center'
+            data-testid='subject'
+          >
             あなたへのおすすめのウマ娘は
           </Box>
-          <Box sx={{ typography: { xs: 'h6', sm: 'h4', md: 'h4' } }} textAlign='center'>
+          <Box
+            sx={{ typography: { xs: 'h6', sm: 'h4', md: 'h4' } }}
+            textAlign='center'
+            data-testid='result'
+          >
             {name ? name : ''}です
           </Box>
         </Grid>
@@ -67,7 +75,11 @@ const Result: NextPage = () => {
               />
             </CardMedia>
             <CardContent>
-              <Box sx={{ typography: { xs: 'h6', sm: 'h5', md: 'h5' } }} textAlign='center'>
+              <Box
+                sx={{ typography: { xs: 'h6', sm: 'h5', md: 'h5' } }}
+                textAlign='center'
+                data-testid='name'
+              >
                 {name ? name : ''}
               </Box>
             </CardContent>
@@ -91,6 +103,7 @@ const Result: NextPage = () => {
                   target='_blank'
                   href={url ? url : ''}
                   rel='noopener noreferrer'
+                  data-testid='about'
                 >
                   {url ? 'このウマ娘について' : ''}
                 </Button>
@@ -117,7 +130,12 @@ const Result: NextPage = () => {
           textAlign='center'
         >
           <Link href='/vote' style={{ textDecoration: 'none' }}>
-            <Button variant='contained' sx={{ width: { xs: '90%' } }} size='medium'>
+            <Button
+              variant='contained'
+              sx={{ width: { xs: '90%' } }}
+              size='medium'
+              data-testid='restart'
+            >
               最初から遊ぶ
             </Button>
           </Link>
@@ -140,7 +158,12 @@ const Result: NextPage = () => {
             as={'/vote'}
             style={{ textDecoration: 'none' }}
           >
-            <Button variant='contained' sx={{ width: { xs: '90%' } }} size='medium'>
+            <Button
+              variant='contained'
+              sx={{ width: { xs: '90%' } }}
+              size='medium'
+              data-testid='continue'
+            >
               続けて遊ぶ
             </Button>
           </Link>
@@ -165,7 +188,12 @@ const Result: NextPage = () => {
           textAlign='center'
         >
           <Link href='/' style={{ textDecoration: 'none' }}>
-            <Button variant='contained' sx={{ width: { xs: '90%' } }} size='medium'>
+            <Button
+              variant='contained'
+              sx={{ width: { xs: '90%' } }}
+              size='medium'
+              data-testid='home'
+            >
               トップ
             </Button>
           </Link>
@@ -183,7 +211,12 @@ const Result: NextPage = () => {
           textAlign='center'
         >
           <Link href='/ranking' style={{ textDecoration: 'none' }}>
-            <Button variant='contained' sx={{ width: { xs: '90%' } }} size='medium'>
+            <Button
+              variant='contained'
+              sx={{ width: { xs: '90%' } }}
+              size='medium'
+              data-testid='ranking'
+            >
               ランキング
             </Button>
           </Link>
