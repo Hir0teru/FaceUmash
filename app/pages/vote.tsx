@@ -101,6 +101,7 @@ const Buttons = ({
           opponentCharacter={characters[1]}
           onClick={handleCradButtonClicked}
           disabled={isLoading}
+          data-testid='test'
         />
       </Grid>
       <Grid
@@ -114,6 +115,7 @@ const Buttons = ({
           opponentCharacter={characters[0]}
           onClick={handleCradButtonClicked}
           disabled={isLoading}
+          data-testid='test'
         />
       </Grid>
     </>
