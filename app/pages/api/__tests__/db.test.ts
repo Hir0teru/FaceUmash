@@ -15,7 +15,7 @@ describe('Test for api/db.ts', () => {
     const mockRandomValues: number[] = [0.1, 0.5, 0.3, 0.8, 0.6, 0.2, 0.9, 0.4, 0.7, 0.0]
     randomSpy.mockImplementation(() => mockRandomValues.shift() as number)
 
-    const max: number = 9
+    const max: number = 10
     const len: number = 5
     const expectedResult: number[] = [1, 5, 3, 8, 6]
 
