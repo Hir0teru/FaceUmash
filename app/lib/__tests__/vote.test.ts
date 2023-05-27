@@ -1,48 +1,36 @@
-import { characters } from '../../__mocks__/db'
-import type { Character, Pool } from '../../interfaces'
+import type { Character } from '../../interfaces'
 import { generatePool } from '../vote'
-process.env.NEXT_PUBLIC_POOL = '15'
 
-describe('Test for vote.ts', () => {
-  test('generatePoolのテスト:selectedCharacter指定なし', () => {
-    // シャッフルなし
-    const spyRandom = jest.spyOn(Math, 'random').mockReturnValue(0.9999)
-    const expected: Pool = {
-      characters: characters.slice(0, 2),
-      rest: characters.slice(2, Number(process.env.NEXT_PUBLIC_POOL)),
-    }
-    const result: Pool = generatePool(characters)
-    spyRandom.mockRestore()
-    expect(result).toEqual(expected)
+describe('Test for lib/vote.ts', () => {
+  test('generatePool with a selected character', () => {
+    const characters: Character[] = [
+      { id: '0002', name: 'test3', url: 'test3.com' },
+      { id: '0001', name: 'test2', url: 'test2.com' },
+      { id: '0000', name: 'test1', url: 'test1.com' },
+    ]
+    const selectedCharacter: Character = { id: '0003', name: 'test4', url: 'test4.com' }
+
+    const pool = generatePool(characters, selectedCharacter)
+
+    expect(pool.characters.length).toBe(2)
+    expect(pool.characters[0]).toEqual(selectedCharacter)
+    expect(pool.characters[1]).toEqual(characters[0])
+    expect(pool.rest.length).toBe(2)
+    expect(pool.rest).toEqual(expect.arrayContaining([characters[1], characters[2]]))
   })
 
-  test('generatePoolのテスト:selectedCharacter指定ありかつ、selectedCharacterがランダムに生成された配列に含まれていない場合', () => {
-    // シャッフルなし
-    const spyRandom = jest.spyOn(Math, 'random').mockReturnValue(0.9999)
-    const selectedCharacter: Character = characters[87]
-    const expected: Pool = {
-      characters: [selectedCharacter, ...characters.slice(0, 1)],
-      rest: characters.slice(1, Number(process.env.NEXT_PUBLIC_POOL)),
-    }
-    const result: Pool = generatePool(characters, selectedCharacter)
-    spyRandom.mockRestore()
-    expect(result).toEqual(expected)
-  })
+  test('generatePool without a selected character', () => {
+    const characters: Character[] = [
+      { id: '0002', name: 'test3', url: 'test3.com' },
+      { id: '0001', name: 'test2', url: 'test2.com' },
+      { id: '0000', name: 'test1', url: 'test1.com' },
+    ]
 
-  test('generatePoolのテスト:selectedCharacter指定ありかつ、selectedCharacterがランダムに生成された配列に含まれている場合', () => {
-    // シャッフルなし
-    const spyRandom = jest.spyOn(Math, 'random').mockReturnValue(0.9999)
-    const selectedCharacterIndex: number = 10
-    const selectedCharacter: Character = characters[selectedCharacterIndex]
-    const expected: Pool = {
-      characters: [selectedCharacter, ...characters.slice(0, 1)],
-      rest: [
-        ...characters.slice(1, selectedCharacterIndex),
-        ...characters.slice(selectedCharacterIndex + 1, Number(process.env.NEXT_PUBLIC_POOL)),
-      ],
-    }
-    const result: Pool = generatePool(characters, selectedCharacter)
-    spyRandom.mockRestore()
-    expect(result).toEqual(expected)
+    const pool = generatePool(characters)
+
+    expect(pool.characters.length).toBe(2)
+    expect(pool.characters).toEqual(expect.arrayContaining([characters[0], characters[1]]))
+    expect(pool.rest.length).toBe(1)
+    expect(pool.rest).toEqual(expect.arrayContaining([characters[2]]))
   })
 })

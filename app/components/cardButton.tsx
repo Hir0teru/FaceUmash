@@ -16,6 +16,7 @@ const CardButton = ({ myCharacter, opponentCharacter, onClick, disabled }: CardB
       <CardActionArea
         onClick={() => onClick(myCharacter?.id, opponentCharacter?.id)}
         disabled={disabled}
+        data-testid={`button-${myCharacter?.id}`}
       >
         <Card>
           <CardMedia sx={{ mt: { xs: '2.5%', md: '1.5%' } }}>

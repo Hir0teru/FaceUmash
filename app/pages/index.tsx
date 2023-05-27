@@ -12,13 +12,15 @@ const Home: NextPage = () => {
     <>
       <Grid container sx={{ height: 'auto', margin: 'auto' }}>
         <Grid item xs={12}>
-          <Box sx={{ typography: { xs: 'h4', md: 'h2' } }} textAlign='center'>
+          <Box sx={{ typography: { xs: 'h4', md: 'h2' } }} textAlign='center' data-testid='subject'>
             どっちが気になる？
           </Box>
         </Grid>
         <Grid item xs={10} sm={8} sx={{ margin: 'auto', mt: { xs: '5%', md: '2.5%' } }}>
           <Card>
-            <Box sx={{ typography: 'h5' }}>あそびかた</Box>
+            <Box sx={{ typography: 'h5' }} data-testid='description'>
+              あそびかた
+            </Box>
             <List>
               {itemTexts.map((text: string, index: number) => (
                 <ListItem key={index}>
@@ -31,6 +33,7 @@ const Home: NextPage = () => {
                       fontWeight: 'medium',
                       variant: 'body1',
                     }}
+                    data-testid={`description-${index}`}
                   />
                 </ListItem>
               ))}
@@ -45,7 +48,11 @@ const Home: NextPage = () => {
           textAlign='center'
         >
           <Link href='/vote' style={{ textDecoration: 'none' }}>
-            <Button variant='contained' sx={{ width: '100%', height: '6.25vh', fontSize: 20 }}>
+            <Button
+              variant='contained'
+              sx={{ width: '100%', height: '6.25vh', fontSize: 20 }}
+              data-testid='play'
+            >
               あそんでみる
             </Button>
           </Link>
@@ -53,6 +60,7 @@ const Home: NextPage = () => {
             <Button
               variant='contained'
               sx={{ width: '100%', height: '6.25vh', fontSize: 20, mt: '2.5%' }}
+              data-testid='ranking'
             >
               ランキング
             </Button>
