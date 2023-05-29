@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { SWRConfig, Middleware, SWRResponse } from 'swr'
-import Ranking from '../ranking'
+import Ranking from '../pages/ranking'
 
 describe('Test for pages/ranking', () => {
   test('renders loading state initially', async () => {
