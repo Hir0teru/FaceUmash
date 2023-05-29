@@ -65,7 +65,7 @@ const Ranking: NextPage = () => {
             margin: 'auto',
           }}
         >
-          <Box sx={{ typography: 'subtitle2' }} textAlign={'right'}>
+          <Box sx={{ typography: 'subtitle2' }} textAlign={'right'} data-testid='updatedAt'>
             最終更新：{createdAt}
           </Box>
           <DataGrid

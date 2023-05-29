@@ -32,7 +32,11 @@ const Vote: NextPage = () => {
     <>
       <Grid container>
         <Grid item xs={12}>
-          <Box sx={{ typography: { xs: 'h4', md: 'h2' } }} textAlign='center'>
+          <Box
+            sx={{ typography: { xs: 'h4', md: 'h2' } }}
+            textAlign='center'
+            data-testid='question'
+          >
             どっちが気になる？
           </Box>
         </Grid>
@@ -97,6 +101,7 @@ const Buttons = ({
           opponentCharacter={characters[1]}
           onClick={handleCradButtonClicked}
           disabled={isLoading}
+          data-testid='test'
         />
       </Grid>
       <Grid
@@ -110,6 +115,7 @@ const Buttons = ({
           opponentCharacter={characters[0]}
           onClick={handleCradButtonClicked}
           disabled={isLoading}
+          data-testid='test'
         />
       </Grid>
     </>
