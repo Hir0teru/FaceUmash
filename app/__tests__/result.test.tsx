@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 import { NextRouter } from 'next/router'
 import { RouterContext } from 'next/dist/shared/lib/router-context'
 import '@testing-library/jest-dom'
-import Result from '../result'
+import Result from '../pages/result'
 
 describe('Test for pages/result', () => {
   const mockRouter: Partial<NextRouter> = {

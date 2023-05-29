@@ -3,7 +3,7 @@ import { NextRouter } from 'next/router'
 import { RouterContext } from 'next/dist/shared/lib/router-context'
 import '@testing-library/jest-dom'
 import { SWRConfig, Middleware, SWRResponse } from 'swr'
-import Vote from '../vote'
+import Vote from '../pages/vote'
 
 describe('Test for pages/vote', () => {
   test('renders loading state initially', async () => {
