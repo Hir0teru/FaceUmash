@@ -7,7 +7,7 @@ import { generateTweetURL } from '../lib/twitterUtil'
 const Footer = (): JSX.Element => {
   return (
     <>
-      <Grid container textAlign='center' sx={{ height: '100%' }}>
+      <Grid container textAlign='center' sx={{ height: '100%' }} data-testid='footer'>
         <Grid item xs={12}>
           <Link
             href={generateTweetURL('FaceUmash | 推しウマ娘が見つかるかも？', 'temp')} // TODO:ドメインは環境変数化する
@@ -28,13 +28,14 @@ const Footer = (): JSX.Element => {
                 },
               }}
               startIcon={<TwitterIcon />}
+              data-testid='tweetButton'
             >
               ツイート
             </Button>
           </Link>
         </Grid>
         <Grid item xs={12}>
-          <Typography>© 2022 Hir0teru</Typography>
+          <Typography data-testid='copyright'>© 2022 Hir0teru</Typography>
         </Grid>
       </Grid>
     </>
