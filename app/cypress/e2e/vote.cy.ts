@@ -74,3 +74,5 @@ describe('Tests for Vote', () => {
     })
   })
 })
+
+export {}

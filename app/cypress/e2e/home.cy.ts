@@ -35,3 +35,5 @@ describe('Tests for Home', () => {
     cy.url().should('include', '/ranking')
   })
 })
+
+export {}

@@ -25,3 +25,5 @@ describe('Tests for Ranking', () => {
     cy.url().should('eq', 'http://localhost:3000/')
   })
 })
+
+export {}
