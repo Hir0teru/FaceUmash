@@ -95,13 +95,13 @@ const Buttons = ({
         xs={6}
         key={characters[0]?.id}
         sx={{ margin: 'auto', mt: { xs: '5%', md: '2.5%' } }}
+        data-testid='button-left'
       >
         <CardButton
           myCharacter={characters[0]}
           opponentCharacter={characters[1]}
           onClick={handleCradButtonClicked}
           disabled={isLoading}
-          data-testid='test'
         />
       </Grid>
       <Grid
@@ -109,13 +109,13 @@ const Buttons = ({
         xs={6}
         key={characters[1]?.id}
         sx={{ margin: 'auto', mt: { xs: '5%', md: '2.5%' } }}
+        data-testid='button-right'
       >
         <CardButton
           myCharacter={characters[1]}
           opponentCharacter={characters[0]}
           onClick={handleCradButtonClicked}
           disabled={isLoading}
-          data-testid='test'
         />
       </Grid>
     </>
