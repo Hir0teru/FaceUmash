@@ -106,3 +106,7 @@ dist
 firebase.json
 
 __snapshots__/
+
+# cypress
+cypress/screenshots
+cypress/videos

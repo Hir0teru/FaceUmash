@@ -64,6 +64,7 @@ const Ranking: NextPage = () => {
             height: '100%',
             margin: 'auto',
           }}
+          data-testid='table'
         >
           <Box sx={{ typography: 'subtitle2' }} textAlign={'right'} data-testid='updatedAt'>
             最終更新：{createdAt}

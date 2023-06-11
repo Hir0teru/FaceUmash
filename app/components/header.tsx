@@ -6,14 +6,18 @@ const Header = (): JSX.Element => {
   return (
     <>
       <Link href='/' style={{ textDecoration: 'none' }}>
-        <AppBar position='static' sx={{ textAlign: 'center' }}>
+        <AppBar position='static' sx={{ textAlign: 'center' }} data-testid='header'>
           <Toolbar variant='dense'>
             <Box sx={{ margin: 'auto' }}>
               <Box>
-                <Typography variant='h4'>faceUmash</Typography>
+                <Typography variant='h4' data-testid='title'>
+                  faceUmash
+                </Typography>
               </Box>
               <Box>
-                <Typography variant='subtitle1'>みんなでつくるウマ娘ランキング</Typography>
+                <Typography variant='subtitle1' data-testid='subtitle'>
+                  みんなでつくるウマ娘ランキング
+                </Typography>
               </Box>
             </Box>
           </Toolbar>

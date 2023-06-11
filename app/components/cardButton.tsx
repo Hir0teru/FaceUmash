@@ -23,7 +23,11 @@ const CardButton = ({ myCharacter, opponentCharacter, onClick, disabled }: CardB
             <Image src={image} height={150} width={150} alt={myCharacter?.name} loading='lazy' />
           </CardMedia>
           <CardContent>
-            <Box sx={{ typography: { xs: 'body2', md: 'h5' } }} textAlign='center'>
+            <Box
+              sx={{ typography: { xs: 'body2', md: 'h5' } }}
+              textAlign='center'
+              data-testid='name'
+            >
               {myCharacter?.name}
             </Box>
           </CardContent>
