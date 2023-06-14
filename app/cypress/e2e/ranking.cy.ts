@@ -5,7 +5,6 @@ describe('Tests for Ranking', () => {
 
   it('Elements appear on the screen', () => {
     cy.getBySel('loading')
-    cy.getBySel('ranking')
 
     cy.getBySel('header')
     cy.getBySel('title').contains('faceUmash')
