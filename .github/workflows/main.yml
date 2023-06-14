@@ -1,0 +1,33 @@
+name: Run regression tests
+on: [pull_request]
+env:
+  PROJECT_ID: ${{secrets.DEV_PROJECT_ID}}
+  PRIVATE_KEY: ${{secrets.DEV_PRIVATE_KEY}}
+  CLIENT_EMAIL: ${{secrets.DEV_CLIENT_EMAIL}}
+  NEXT_PUBLIC_POOL: ${{secrets.DEV_NEXT_PUBLIC_POOL}}
+  MAX_RANDOM_NUMBER: ${{secrets.DEV_MAX_RANDOM_NUMBER}}
+  NUM_SHARDS: ${{secrets.DEV_NUM_SHARDS}}
+jobs:
+  ci:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Start app
+        run: |
+          cd app
+          yarn
+          yarn build
+          yarn start &
+
+      - name: Run unit tests and integration tests
+        run: |
+          cd app
+          yarn test
+
+      - name: Run e2e tests
+        uses: cypress-io/github-action@v5
+        with:
+          wait-on: "http://localhost:3000"
+          working-directory: app

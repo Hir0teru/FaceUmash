@@ -11,6 +11,7 @@ const customJestConfig = {
     '^@/lib/(.*)$': '<rootDir>/lib/$1',
   },
   testEnvironment: 'jest-environment-jsdom',
+  reporters: ['default', 'github-actions'],
 }
 
 module.exports = createJestConfig(customJestConfig)
