@@ -3,20 +3,31 @@ import { NextRouter } from 'next/router'
 import { RouterContext } from 'next/dist/shared/lib/router-context'
 import '@testing-library/jest-dom'
 import Result from '../pages/result'
+import { SWRConfig, Middleware, SWRResponse } from 'swr'
 
 describe('Test for pages/result', () => {
-  const mockRouter: Partial<NextRouter> = {
-    query: {
-      id: '0001',
-      name: 'name',
-      url: 'test@example.com',
-    },
-  }
   beforeEach(() => {
+    const mockRouter: Partial<NextRouter> = {
+      query: { id: '0001' },
+      isReady: true,
+    }
+
+    const mock: Middleware = () => {
+      return (): SWRResponse<any, any> => {
+        return {
+          data: { result: { name: 'name', url: 'test@example.com' } },
+          error: undefined,
+          mutate: (_) => Promise.resolve(),
+          isValidating: false,
+        }
+      }
+    }
     render(
-      <RouterContext.Provider value={mockRouter as NextRouter}>
-        <Result />
-      </RouterContext.Provider>,
+      <SWRConfig value={{ use: [mock] }}>
+        <RouterContext.Provider value={mockRouter as NextRouter}>
+          <Result />
+        </RouterContext.Provider>
+      </SWRConfig>,
     )
   })
 
@@ -80,78 +91,98 @@ describe('Test for pages/result', () => {
   })
 })
 
-describe('Test for pages/result with invalid values in the query', () => {
-  const mockRouter: Partial<NextRouter> = {
-    query: {
-      id: undefined,
-      name: undefined,
-      url: undefined,
-    },
-  }
+describe('Test for pages/result with router is not ready', () => {
   beforeEach(() => {
+    const mockRouter: Partial<NextRouter> = {
+      query: { id: '0001' },
+      isReady: false,
+    }
+
+    const mock: Middleware = () => {
+      return (): SWRResponse<any, any> => {
+        return {
+          data: { result: { name: 'name', url: 'test@example.com' } },
+          error: undefined,
+          mutate: (_) => Promise.resolve(),
+          isValidating: false,
+        }
+      }
+    }
     render(
-      <RouterContext.Provider value={mockRouter as NextRouter}>
-        <Result />
-      </RouterContext.Provider>,
+      <SWRConfig value={{ use: [mock] }}>
+        <RouterContext.Provider value={mockRouter as NextRouter}>
+          <Result />
+        </RouterContext.Provider>
+      </SWRConfig>,
     )
   })
 
-  test('renders subject with invalid value', () => {
-    const element = screen.getByTestId('subject')
+  test('renders loading when router is not ready', () => {
+    const element = screen.getByTestId('loading')
     expect(element).toBeInTheDocument()
-    expect(element.textContent).toBe('あなたへのおすすめのウマ娘は')
+  })
+})
+
+describe('Test for pages/result with swr response is falsy', () => {
+  beforeEach(() => {
+    const mockRouter: Partial<NextRouter> = {
+      query: { id: '0001' },
+      isReady: true,
+    }
+
+    const mock: Middleware = () => {
+      return (): SWRResponse<any, any> => {
+        return {
+          data: undefined,
+          error: undefined,
+          mutate: (_) => Promise.resolve(),
+          isValidating: false,
+        }
+      }
+    }
+    render(
+      <SWRConfig value={{ use: [mock] }}>
+        <RouterContext.Provider value={mockRouter as NextRouter}>
+          <Result />
+        </RouterContext.Provider>
+      </SWRConfig>,
+    )
   })
 
-  test('renders result with invalid value', () => {
-    const element = screen.getByTestId('result')
+  test('renders loading when swr response is falsy', () => {
+    const element = screen.getByTestId('loading')
     expect(element).toBeInTheDocument()
-    expect(element.textContent).toBe('です')
+  })
+})
+
+describe('Test for pages/result with error', () => {
+  beforeEach(() => {
+    const mockRouter: Partial<NextRouter> = {
+      query: { id: '0001' },
+      isReady: true,
+    }
+
+    const mock: Middleware = () => {
+      return (): SWRResponse<any, any> => {
+        return {
+          data: undefined,
+          error: { message: 'error' },
+          mutate: (_) => Promise.resolve(),
+          isValidating: false,
+        }
+      }
+    }
+    render(
+      <SWRConfig value={{ use: [mock] }}>
+        <RouterContext.Provider value={mockRouter as NextRouter}>
+          <Result />
+        </RouterContext.Provider>
+      </SWRConfig>,
+    )
   })
 
-  test('renders name with invalid value', () => {
-    const element = screen.getByTestId('name')
+  test('renders error when error occurs', () => {
+    const element = screen.getByTestId('error')
     expect(element).toBeInTheDocument()
-    expect(element.textContent).toBe('')
-  })
-
-  test('renders Image with invalid value', () => {
-    const element = screen.getByRole('img')
-    expect(element).toBeInTheDocument()
-    expect(element.getAttribute('alt')).toBe('')
-  })
-
-  test('renders about button with invalid href attribute and invalid text content', () => {
-    const element = screen.getByTestId('about')
-    expect(element).toBeInTheDocument()
-    expect(element).toHaveAttribute('href', '')
-    expect(element.textContent).toBe('')
-  })
-
-  test('restart button has the correct href attribute and text content', () => {
-    const element = screen.getByTestId('restart')
-    expect(element).toBeInTheDocument()
-    expect(element.closest('a')).toHaveAttribute('href', '/vote')
-    expect(element.textContent).toBe('最初から遊ぶ')
-  })
-
-  test('continue button has the correct href attribute and text content', () => {
-    const element = screen.getByTestId('continue')
-    expect(element).toBeInTheDocument()
-    expect(element.closest('a')).toHaveAttribute('href', '/vote')
-    expect(element.textContent).toBe('続けて遊ぶ')
-  })
-
-  test('home button has the correct href attribute and text content', () => {
-    const element = screen.getByTestId('home')
-    expect(element).toBeInTheDocument()
-    expect(element.closest('a')).toHaveAttribute('href', '/')
-    expect(element.textContent).toBe('トップ')
-  })
-
-  test('ranking button has the correct href attribute and text content', () => {
-    const element = screen.getByTestId('ranking')
-    expect(element).toBeInTheDocument()
-    expect(element.closest('a')).toHaveAttribute('href', '/ranking')
-    expect(element.textContent).toBe('ランキング')
   })
 })

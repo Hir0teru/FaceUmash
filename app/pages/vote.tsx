@@ -68,7 +68,7 @@ const Buttons = ({
       router.push(
         {
           pathname: '/result',
-          query: copy[0]?.id === winner ? copy[0] : copy[1],
+          query: `id=${copy[0]?.id === winner ? copy[0].id : copy[1].id}`,
         },
         undefined,
         { shallow: true },

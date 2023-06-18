@@ -13,13 +13,36 @@ import type { NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import useSWR from 'swr'
+import Loading from '../components/loading'
 import { generateTweetURL } from '../lib/twitterUtil'
 
 const Result: NextPage = () => {
   const router = useRouter()
+  if (!router.isReady) return <Loading />
   const id = router.query.id as string
-  const name = router.query.name as string
-  const url = router.query.url as string
+  const { data, error } = useSWR(`api/result?id=${id}`, (url: string) =>
+    fetch(url).then(async (response) => {
+      const { status }: { status: number } = response
+      if (status !== 200) {
+        const {
+          error: { message },
+        }: { error: { message: string } } = await response.json()
+        throw new Error(`${status} ${message}`)
+      }
+      return response.json()
+    }),
+  )
+
+  if (error) return <div data-testId='error'>Error: {error.message}</div>
+  if (!data) return <Loading />
+
+  const {
+    result: { name, url },
+  }: {
+    result: { name: string; url: string }
+  } = data
+
   return (
     <>
       <Grid container sx={{ height: '100%', width: 'auto' }} textAlign='center'>
