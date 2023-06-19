@@ -1,21 +1,6 @@
 describe('Tests for Result', () => {
   beforeEach(() => {
-    // display result
-    cy.visit('/vote')
-    cy.getBySel('button-left').click()
-    cy.getBySel('button-left').click()
-    cy.getBySel('button-left').click()
-    cy.getBySel('button-left').click()
-    cy.getBySel('button-left').click()
-    cy.getBySel('button-left').click()
-    cy.getBySel('button-left').click()
-    cy.getBySel('button-left').click()
-    cy.getBySel('button-left').click()
-    cy.getBySel('button-left').click()
-    cy.getBySel('button-left').click()
-    cy.getBySel('button-left').click()
-    cy.getBySel('button-left').click()
-    cy.getBySel('button-left').click()
+    cy.visit('/result?id=0001')
   })
 
   it('Elements appear on the screen', () => {
@@ -24,8 +9,8 @@ describe('Tests for Result', () => {
     cy.getBySel('subtitle').contains('みんなでつくるウマ娘ランキング')
 
     cy.getBySel('subject').contains('あなたへのおすすめのウマ娘は')
-    cy.getBySel('result').should('not.equal', '')
-    cy.getBySel('name').should('not.equal', '')
+    cy.getBySel('result').contains('サイレンススズカです')
+    cy.getBySel('name').contains('サイレンススズカ')
     cy.getBySel('about').contains('このウマ娘について')
     cy.getBySel('about').should('have.attr', 'href').should('not.equal', '')
     cy.getBySel('about').should('have.attr', 'rel').should('equal', 'noopener noreferrer')
@@ -59,6 +44,23 @@ describe('Tests for Result', () => {
   it('Clicking the ranking button navigates to ranking', () => {
     cy.getBySel('ranking').click()
     cy.url().should('eq', 'http://localhost:3000/ranking')
+  })
+})
+
+describe('Tests for Result with invalid parameter', () => {
+  it('Renders error if an id that does not exist is used as a parameter', () => {
+    cy.visit('/result?id=99999999')
+    cy.getBySel('error')
+  })
+
+  it('Renders error if no parameter is specified', () => {
+    cy.visit('/result')
+    cy.getBySel('error')
+  })
+
+  it('Renders error if non-id parameters are specified', () => {
+    cy.visit('/result?test=0001')
+    cy.getBySel('error')
   })
 })
 
