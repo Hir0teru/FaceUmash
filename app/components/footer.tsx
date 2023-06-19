@@ -10,7 +10,10 @@ const Footer = (): JSX.Element => {
       <Grid container textAlign='center' sx={{ height: '100%' }} data-testid='footer'>
         <Grid item xs={12}>
           <Link
-            href={generateTweetURL('FaceUmash | 推しウマ娘が見つかるかも？', 'temp')} // TODO:ドメインは環境変数化する
+            href={generateTweetURL(
+              'FaceUmash | 推しウマ娘が見つかるかも？',
+              `${process.env.NEXT_PUBLIC_DOMAIN ?? ''}`,
+            )}
             target='_blank'
             rel='noopener noreferrer'
             passHref
