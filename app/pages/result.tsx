@@ -110,8 +110,8 @@ const Result: NextPage = () => {
               <Link
                 href={generateTweetURL(
                   name && `あなたへのおすすめのウマ娘は${name}です`,
-                  `${router.asPath}`,
-                )} // TODO:ドメインは環境変数化する
+                  `${process.env.NEXT_PUBLIC_DOMAIN ?? ''}${router.asPath}`,
+                )}
                 target='_blank'
                 rel='noopener noreferrer'
                 passHref

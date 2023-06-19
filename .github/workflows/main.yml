@@ -7,6 +7,7 @@ env:
   NEXT_PUBLIC_POOL: ${{secrets.DEV_NEXT_PUBLIC_POOL}}
   MAX_RANDOM_NUMBER: ${{secrets.DEV_MAX_RANDOM_NUMBER}}
   NUM_SHARDS: ${{secrets.DEV_NUM_SHARDS}}
+  NEXT_PUBLIC_DOMAIN: ${{secrets.DEV_NEXT_PUBLIC_DOMAIN}}
 jobs:
   ci:
     runs-on: ubuntu-20.04
