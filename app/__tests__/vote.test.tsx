@@ -59,7 +59,38 @@ describe('Test for pages/vote', () => {
         </RouterContext.Provider>
       </SWRConfig>,
     )
-    await waitFor(() => screen.getByTestId('question'))
     expect(screen.getByTestId('question')).toHaveTextContent('どっちが気になる？')
+  })
+})
+
+describe('Test for pages/vote with error', () => {
+  test('renders error when error occurs', async () => {
+    const mockRouter: Partial<NextRouter> = {
+      query: {
+        pathname: '/result',
+      },
+    }
+    const mock: Middleware = () => {
+      return (): SWRResponse<any, any> => {
+        return {
+          data: [
+            { id: '0000', name: 'test1', url: '' },
+            { id: '0001', name: 'test2', url: '' },
+          ],
+          error: { message: 'error' },
+          mutate: (_) => Promise.resolve(),
+          isValidating: false,
+        }
+      }
+    }
+    render(
+      <SWRConfig value={{ use: [mock] }}>
+        <RouterContext.Provider value={mockRouter as NextRouter}>
+          <Vote />
+        </RouterContext.Provider>
+      </SWRConfig>,
+    )
+    const element = screen.getByTestId('error')
+    expect(element).toBeInTheDocument()
   })
 })

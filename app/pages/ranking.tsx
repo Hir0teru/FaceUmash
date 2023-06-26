@@ -4,9 +4,15 @@ import useSWR from 'swr'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import Image from 'next/image'
 import Loading from '../components/loading'
+import Error from '../components/error'
+import { fetcher } from '../lib/fetcher'
 
 const Ranking: NextPage = () => {
-  const { data } = useSWR('/api/ranking', (url: string) => fetch(url).then((res) => res.json()))
+  const { data, error } = useSWR('/api/ranking', fetcher)
+
+  if (error) return <Error message={error?.message} />
+  if (!data) return <Loading />
+
   const cols: GridColDef[] = [
     {
       field: 'rank',
@@ -37,7 +43,6 @@ const Ranking: NextPage = () => {
       disableColumnMenu: true,
     },
   ]
-  if (!data) return <Loading />
 
   const {
     createdAt,
