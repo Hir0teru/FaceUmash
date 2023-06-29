@@ -15,26 +15,17 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import Loading from '../components/loading'
+import Error from '../components/error'
 import { generateTweetURL } from '../lib/twitterUtil'
+import { fetcher } from '../lib/fetcher'
 
 const Result: NextPage = () => {
   const router = useRouter()
   if (!router.isReady) return <Loading />
   const id = router.query.id as string
-  const { data, error } = useSWR(`api/result?id=${id}`, (url: string) =>
-    fetch(url).then(async (response) => {
-      const { status }: { status: number } = response
-      if (status !== 200) {
-        const {
-          error: { message },
-        }: { error: { message: string } } = await response.json()
-        throw new Error(`${status} ${message}`)
-      }
-      return response.json()
-    }),
-  )
+  const { data, error } = useSWR(`api/result?id=${id}`, fetcher)
 
-  if (error) return <div data-testId='error'>Error: {error.message}</div>
+  if (error) return <Error message={error?.message} />
   if (!data) return <Loading />
 
   const {
