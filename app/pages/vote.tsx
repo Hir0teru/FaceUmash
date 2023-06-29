@@ -6,8 +6,10 @@ import useSWR from 'swr'
 import { useSWRConfig } from 'swr'
 import CardButton from '../components/cardButton'
 import Loading from '../components/loading'
+import Error from '../components/error'
 import type { Character, Pool } from '../interfaces'
 import { generatePool } from '../lib/vote'
+import { fetcher } from '../lib/fetcher'
 
 const Vote: NextPage = () => {
   const router = useRouter()
@@ -16,17 +18,12 @@ const Vote: NextPage = () => {
     ? `/api/db?selected=${selectedCharacter}`
     : '/api/db?selected'
 
-  const { data: baseCharacters, error } = useSWR(
-    uri,
-    (url: string) => fetch(url).then((res) => res.json()),
-    {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    },
-  )
+  const { data: baseCharacters, error } = useSWR(uri, fetcher, {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  })
 
-  // TODO:Implement error handling and resource loading processes
-  if (error) return <div></div>
+  if (error) return <Error message={error?.message} />
   if (!baseCharacters) return <Loading />
   return (
     <>
