@@ -5,7 +5,7 @@ const Loading = (): JSX.Element => {
   return (
     <>
       <Image
-        src={'/eclipse.svg'}
+        src={'/3-dots-rotate-white-36.svg'}
         alt='loading'
         height={50}
         width={50}
