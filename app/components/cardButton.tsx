@@ -20,7 +20,7 @@ const CardButton = ({ myCharacter, opponentCharacter, onClick, disabled }: CardB
       >
         <Card>
           <CardMedia sx={{ mt: { xs: '2.5%', md: '1.5%' } }}>
-            <Image src={image} height={150} width={150} alt={myCharacter?.name} priority='true' />
+            <Image src={image} height={150} width={150} alt={myCharacter?.name} priority={true} />
           </CardMedia>
           <CardContent>
             <Box
