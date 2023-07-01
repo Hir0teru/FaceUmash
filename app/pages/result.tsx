@@ -85,7 +85,7 @@ const Result: NextPage = () => {
                 height={240}
                 width={240}
                 alt={name ? name : ''}
-                loading='lazy'
+                priority='true'
               />
             </CardMedia>
             <CardContent>
